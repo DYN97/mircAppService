@@ -59,6 +59,9 @@ namespace aspnetapp.Controllers
         {
             var header = Request.Headers;
             var openId = header["X-WX-OPENID"].ToString();
+            if (string.IsNullOrEmpty(openId)) { 
+                return new Response { Code = 999, Message = "环境信息有误！" };
+            }
             var customer = _context.Customers.Single(t=> t.Open_id == openId);
             try
             {
