@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace aspnetapp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Merchant")]
     [ApiController]
     public class MerchantController : ControllerBase
     {
