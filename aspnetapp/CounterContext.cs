@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using aspnetapp.models;
+using System.Linq; 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace aspnetapp
@@ -10,7 +13,13 @@ namespace aspnetapp
         public CounterContext()
         {
         }
-        public DbSet<Counter> Counters { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
+        public DbSet<Merchant> Merchants { get; set; } = null!;
+        public DbSet<Movie> Movies { get; set; } = null!;
+        public DbSet<Brand> Brands { get; set; } = null!;
+        public DbSet<PushRecord> PushRecords { get; set; } = null!;
+        public DbSet<Relationship> Relationships { get; set; } = null!;
+        public DbSet<Vehicle> Vehicle { get; set; } = null!;
         public CounterContext(DbContextOptions<CounterContext> options)
             : base(options)
         {
@@ -27,6 +36,8 @@ namespace aspnetapp
                 var port = addressParts?[1];
                 var connstr = $"server={host};port={port};user={username};password={password};database=aspnet_demo";
                 optionsBuilder.UseMySql(connstr, Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.18-mysql"));
+                optionsBuilder.EnableSensitiveDataLogging();
+                optionsBuilder.LogTo(Console.WriteLine);
             }
         }
 
@@ -34,7 +45,9 @@ namespace aspnetapp
         {
             modelBuilder.UseCollation("utf8_general_ci")
                 .HasCharSet("utf8");
-            modelBuilder.Entity<Counter>().ToTable("Counters");
+            modelBuilder.Entity<Vehicle>()
+            .HasOne(p => p.Customer)
+            .WithMany(b => b.Vehicle);
             OnModelCreatingPartial(modelBuilder);
         }
 
