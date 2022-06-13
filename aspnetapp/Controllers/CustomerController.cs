@@ -58,7 +58,7 @@ namespace aspnetapp.Controllers
         public async Task<ActionResult<Response>> GetVehicleList()
         {
             var header = Request.Headers;
-            var openId = header["X-WX-OPENID"];
+            var openId = header["X-WX-OPENID"].ToString();
             if (string.IsNullOrEmpty(openId))
             {
                 return new Response { Code = 999, Message = "环境信息有误！" };
