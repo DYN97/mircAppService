@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using aspnetapp;
 using aspnetapp.models;
-
+using System.Net.Mime;
 
 namespace aspnetapp.Controllers
 {
+    [Produces(MediaTypeNames.Application.Json)]
     [Route("api/customer")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -25,19 +26,20 @@ namespace aspnetapp.Controllers
         // GET: api/count.
         [Route("register")]
         [HttpPost]
-        public ActionResult<Response> RegisterCustomer(CustomerRequest request)
+        public ActionResult<Response> RegisterCustomer([FromForm] CustomerRequest data)
         {
             var header = Request.Headers;
-            if (string.IsNullOrEmpty(request.MerchantId)) {
-                return new Response { Code = 999, Message = "商户不存在" };
-            }
-            var merchant = _context.Merchants.Find(request.MerchantId);
-            if (merchant == null)
+           /* if (string.IsNullOrEmpty(request.merchant_id))
             {
                 return new Response { Code = 999, Message = "商户不存在" };
             }
+            var merchant = _context.Merchants.Find(Convert.ToInt32(request.merchant_id));
+            if (merchant == null)
+            {
+                return new Response { Code = 999, Message = "商户不存在" };
+            }*/
             var customer = new Customer();
-            customer.Mobile = Convert.ToInt32(request.Mobile);
+            // customer.Mobile = Convert.ToInt32(request.mobile);
             customer.Open_id = header["X-WX-OPENID"].ToString();
             customer.Create_time = DateTime.Now;
             customer.Update_time = DateTime.Now;

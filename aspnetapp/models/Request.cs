@@ -1,10 +1,13 @@
-﻿namespace aspnetapp.models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace aspnetapp.models
 {
     public class CustomerRequest
     {
-        public string? CustomerId { get; set; }
-        public string? MerchantId { get; set; }
-        public string? Mobile { get; set; }
+        [Required(ErrorMessage = "Please enter the user's merchant_id.")]
+        public string merchant_id { get; set; }
+        [Required(ErrorMessage = "Please enter a mobile.")]
+        public string mobile { get; set; }
     }
     public class VehicleRequest 
     {
