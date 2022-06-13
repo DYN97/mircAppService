@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Text.Json;
 
 namespace aspnetapp
 {
@@ -29,12 +30,9 @@ namespace aspnetapp
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var username = Environment.GetEnvironmentVariable("MYSQL_USERNAME");
-                var password = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
-                var addressParts = Environment.GetEnvironmentVariable("MYSQL_ADDRESS")?.Split(':');
-                var host = addressParts?[0];
-                var port = addressParts?[1];
-                var connstr = $"server={host};port={port};user={username};password={password};database=aspnet_demo";
+                var username = "root";
+                var password = "bSmR4pnC";
+                var connstr = $"server=sh-cynosdbmysql-grp-b798bq8o.sql.tencentcdb.com;port=26621;user={username};password={password};database=aspnet_demo";
                 optionsBuilder.UseMySql(connstr, Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.18-mysql"));
                 optionsBuilder.EnableSensitiveDataLogging();
                 optionsBuilder.LogTo(Console.WriteLine);

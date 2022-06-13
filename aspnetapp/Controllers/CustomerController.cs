@@ -55,20 +55,21 @@ namespace aspnetapp.Controllers
 
         [Route("vehiclelist")]
         [HttpGet]
-        public ActionResult<Response> GetVehicleList()
+        public async Task<ActionResult<Response>> GetVehicleList()
         {
             var header = Request.Headers;
-            var openId = header["X-WX-OPENID"].ToString();
-            if (string.IsNullOrEmpty(openId)) { 
+            var openId = header["X-WX-OPENID"];
+            if (string.IsNullOrEmpty(openId))
+            {
                 return new Response { Code = 999, Message = "环境信息有误！" };
             }
-            var customer = _context.Customers.Single(t=> t.Open_id == openId);
             try
             {
+                
+                var customer = await _context.Customers.FirstOrDefaultAsync(t => t.Open_id == openId);
                 if (customer == null) {
                     return new Response { Code = 999, Message = "用户信息获取失败！" };
                 }
-
                 var result = _context.Vehicle.Where(t=>t.CustomerID == customer.Id&&t.Is_Deleted == 0).ToList();
                 return new Response { Data = result, Message = "获取成功！" };
             }
@@ -143,6 +144,11 @@ namespace aspnetapp.Controllers
             {
                 return new Response { Code = 999, Message = e.Message };
             }
+        }
+        [Route("test")]
+        public ActionResult<Response> test()
+        {
+            return new Response { Code = 999, Message = "没问题" };
         }
     }
 }

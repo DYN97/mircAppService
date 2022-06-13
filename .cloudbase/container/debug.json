@@ -1,0 +1,27 @@
+{
+  "containers": [
+    {
+      "name": "mircappservice",
+      "domain": "",
+      "ip": "",
+      "containerId": "018c924108e795b760a5d48de1c0aeab833bd6224ac347eac31a203f711f88f0"
+    }
+  ],
+  "config": {
+    "mircappservice": {
+      "containerPort": 80,
+      "dockerfilePath": "Dockerfile",
+      "buildDir": "",
+      "minNum": 0,
+      "maxNum": 5,
+      "cpu": 1,
+      "mem": 2,
+      "policyType": "cpu",
+      "policyThreshold": 80,
+      "envParams": {},
+      "customLogs": "stdout",
+      "initialDelaySeconds": 2,
+      "dataBaseName": "aspnet_demo"
+    }
+  }
+}
